@@ -12,6 +12,9 @@ class BaseDumbSession(object):
     def close(self):
         pass
 
+    def rollback():
+        pass
+
 
 class CommitOnSuccessTest(unittest.TestCase):
 
@@ -58,4 +61,16 @@ class CommitOnSuccessTest(unittest.TestCase):
         self.mock_session.return_value = real_session
         with commit_on_success(self.mock_session):
             pass
+        assert 1 == real_session.close.call_count
+
+    def test_rollback_on_exception(self):
+        real_session = mock.Mock()
+        self.mock_session.return_value = real_session
+        try:
+            with commit_on_success(self.mock_session):
+                raise Exception()
+        except:
+            pass
+        assert 1 == real_session.rollback.call_count
+        assert 0 == real_session.commit.call_count
         assert 1 == real_session.close.call_count
