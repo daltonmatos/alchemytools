@@ -14,3 +14,12 @@ def managed(sessionClass, auto_flush=False):
         raise
     finally:
         session.close()
+
+
+@contextmanager
+def commit_on_success(session):
+    try:
+        yield session
+        session.commit()
+    except:
+        pass

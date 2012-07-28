@@ -31,3 +31,19 @@ Additional options
 ^^^^^^^^^^^^^^^^^^
    
  * ``auto_flush``: Sets the autoflush option on the SQLAlchemy session, defaults fo ``False``
+
+
+commit_on_success
+=================
+
+This contextmanager should be used in an inner ``with`` block, where you already have an open session but need to commit more than one time. The code will be somthing on these lines.
+
+  ::
+
+    with managed(MySession) as session:
+        for a in iterable:
+            with commit_on_success(session):
+                process(a)
+                session.add(a)
+
+If you raise an exception inside the second ``with`` block, all previous iterations will already be commited and just the current one will be rolledback.
