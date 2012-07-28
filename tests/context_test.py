@@ -16,7 +16,7 @@ class BaseDumbSession(object):
         pass
 
 
-class CommitOnSuccessTest(unittest.TestCase):
+class ManagedTest(unittest.TestCase):
 
     def setUp(self):
         self.mock_session = mock.Mock()
