@@ -22,7 +22,7 @@ commit_on_success
 
       ::
 
-            with managedsession(MySessionClass) as session:
+            with commit_on_success(MySessionClass) as session:
                 # Do what you need with your session
             # Here the session is already closed and commited
             
@@ -33,3 +33,4 @@ Additional options
    
  * ``auto_flush``: 
    Sets the autoflush option on the SQLAlchemy session, defaults fo ``False``
+
