@@ -25,7 +25,7 @@ This is the basic context manager and it will commit and close your session auto
                 # Do what you need with your session
             # Here the session is already closed and commited
             
-If you raise any exception inside the ``with`` block, the session will be rolled back.
+If you raise any exception inside the ``with`` block, the session will be rolled back and the exception re-raised.
 
 Additional options
 ^^^^^^^^^^^^^^^^^^
