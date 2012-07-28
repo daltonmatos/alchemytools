@@ -17,7 +17,6 @@ setup(
     packages=find_packages(),
     install_requires=['SQLAlchemy==0.7.8'],
     classifiers=[
-          'Development Status :: 5 - Production/Stable',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: BSD License',
           'Programming Language :: Python',
