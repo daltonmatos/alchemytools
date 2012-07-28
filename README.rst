@@ -36,7 +36,7 @@ Additional options
 commit_on_success
 =================
 
-This contextmanager should be used in an inner ``with`` block, where you already have an open session but need to commit more than one time. The code will be somthing on these lines.
+This contextmanager should be used in an inner ``with`` block, where you already have an open session but need to commit more than one time. The code will be something on these lines.
 
   ::
 
