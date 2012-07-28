@@ -75,6 +75,15 @@ class ManagedTest(unittest.TestCase):
         assert 0 == real_session.commit.call_count
         assert 1 == real_session.close.call_count
 
+    def test_context_should_reraise_exceptions(self):
+        raised = False
+        try:
+            with managed(mock.Mock()):
+                raise Exception()
+        except:
+            raised = True
+        assert raised
+
 
 class CommitOnSuccessTest(unittest.TestCase):
 
@@ -92,3 +101,13 @@ class CommitOnSuccessTest(unittest.TestCase):
         except:
             pass
         assert 0 == open_session.commit.call_count
+
+    def test_context_should_reraise_exceptions(self):
+
+        raised = False
+        try:
+            with commit_on_success(mock.Mock()):
+                raise Exception()
+        except:
+            raised = True
+        assert raised

@@ -22,4 +22,4 @@ def commit_on_success(session):
         yield session
         session.commit()
     except:
-        pass
+        raise
