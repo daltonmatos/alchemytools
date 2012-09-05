@@ -7,7 +7,7 @@ BASE_PATH = os.path.dirname(__file__)
 
 
 setup(
-    name='alchemytools',
+    name='Alchemytools',
     version=__version__,
     description='Alchemytools is a set of helpers to be used in any SQLAlchemy project',
     long_description=open(os.path.join(BASE_PATH, 'README.rst')).read(),
