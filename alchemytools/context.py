@@ -3,10 +3,10 @@ from callback import Callback
 
 
 @contextmanager
-def managed(sessionClass, auto_flush=False, callback=None):
+def managed(sessionClass, auto_flush=False, auto_commit=False, callback=None):
     session = sessionClass()
     session.autoflush = auto_flush
-    session.autocommit = False
+    session.autocommit = auto_commit
     try:
         yield session
         session.commit()

@@ -13,7 +13,7 @@ class BaseDumbSession(object):
     def close(self):
         pass
 
-    def rollback():
+    def rollback(self):
         pass
 
 
@@ -37,7 +37,7 @@ class ManagedTest(unittest.TestCase):
     def test_set_autoflush_value(self):
         class MySession(BaseDumbSession):
             def __init__(self):
-                self.autoflush = True
+                self.autoflush = False
 
         with managed(MySession, auto_flush=True) as s:
             assert s.autoflush == True
@@ -49,6 +49,14 @@ class ManagedTest(unittest.TestCase):
 
         with managed(MySession) as s:
             assert s.autocommit == False
+
+    def test_set_autocommit_value(self):
+        class MySession(BaseDumbSession):
+            def __init__(self):
+                self.autocommit = False
+
+        with managed(MySession, auto_commit=True) as s:
+            assert s.autocommit == True
 
     def test_commit_after_yield(self):
         real_session = mock.Mock()
