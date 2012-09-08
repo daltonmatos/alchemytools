@@ -2,6 +2,7 @@ import unittest
 import mock
 
 from alchemytools.context import managed, commit_on_success
+from alchemytools.callback import Callback
 
 
 class BaseDumbSession(object):
@@ -84,6 +85,13 @@ class ManagedTest(unittest.TestCase):
             raised = True
         assert raised
 
+    def test_callback_is_called(self):
+        func = mock.Mock()
+        callback = Callback(func, 42, foo="bar")
+        with managed(mock.Mock(), callback=callback):
+            pass
+
+        func.assert_called_once(42, foo="bar")
 
 class CommitOnSuccessTest(unittest.TestCase):
 
@@ -111,3 +119,7 @@ class CommitOnSuccessTest(unittest.TestCase):
         except:
             raised = True
         assert raised
+
+
+if __name__ == "__main__":
+    unittest.main()

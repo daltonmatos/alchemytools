@@ -1,8 +1,9 @@
 from contextlib import contextmanager
+from callback import Callback
 
 
 @contextmanager
-def managed(sessionClass, auto_flush=False):
+def managed(sessionClass, auto_flush=False, callback=None):
     session = sessionClass()
     session.autoflush = auto_flush
     session.autocommit = False
@@ -11,6 +12,8 @@ def managed(sessionClass, auto_flush=False):
         session.commit()
     except:
         session.rollback()
+        if isinstance(callback, Callback):
+            callback()
         raise
     finally:
         session.close()
