@@ -15,6 +15,13 @@ class CallbackTest(unittest.TestCase):
         cb()
         func.assert_called_with(42, foo="bar")
 
+    def test_func_should_not_raise_exception(self):
+        func = mock.Mock()
+        func.return_value = lambda: 0/0
+        cb = Callback(func, 42)
+        cb()
+        func.assert_called_with(42)
+
 
 if __name__ == "__main__":
     unittest.main()

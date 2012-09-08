@@ -10,4 +10,8 @@ class Callback:
         self.kwargs = kwargs
 
     def __call__(self):
-        self.func(*self.args, **self.kwargs)
+        try:
+            self.func(*self.args, **self.kwargs)
+        except:
+            # FIXME: silently failing
+            pass
