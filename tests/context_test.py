@@ -101,6 +101,19 @@ class ManagedTest(unittest.TestCase):
 
         func.assert_called_once(42, foo="bar")
 
+    def test_session_is_closed_on_return(self):
+        real_session = mock.Mock()
+        self.mock_session.return_value = real_session
+
+        def func():
+            with managed(self.mock_session):
+                return False
+
+        func()
+
+        assert 1 == real_session.close.call_count
+
+
 class CommitOnSuccessTest(unittest.TestCase):
 
     def test_commit_after_with_block(self):
