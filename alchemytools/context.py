@@ -18,11 +18,3 @@ def managed(sessionClass, auto_flush=False, auto_commit=False, callback=None):
     finally:
         session.close()
 
-
-@contextmanager
-def commit_on_success(session):
-    try:
-        yield session
-        session.commit()
-    except:
-        raise

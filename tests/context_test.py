@@ -1,7 +1,7 @@
 import unittest
 import mock
 
-from alchemytools.context import managed, commit_on_success
+from alchemytools.context import managed
 from alchemytools.callback import Callback
 
 
@@ -112,34 +112,6 @@ class ManagedTest(unittest.TestCase):
         func()
 
         assert 1 == real_session.close.call_count
-
-
-class CommitOnSuccessTest(unittest.TestCase):
-
-    def test_commit_after_with_block(self):
-        open_session = mock.Mock()
-        with commit_on_success(open_session):
-            pass
-        assert 1 == open_session.commit.call_count
-
-    def test_do_not_commit_if_exception_raised(self):
-        open_session = mock.Mock()
-        try:
-            with commit_on_success(open_session):
-                raise Exception()
-        except:
-            pass
-        assert 0 == open_session.commit.call_count
-
-    def test_context_should_reraise_exceptions(self):
-
-        raised = False
-        try:
-            with commit_on_success(mock.Mock()):
-                raise Exception()
-        except:
-            raised = True
-        assert raised
 
 
 if __name__ == "__main__":
