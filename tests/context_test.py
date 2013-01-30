@@ -58,12 +58,21 @@ class ManagedTest(unittest.TestCase):
         with managed(MySession, auto_commit=True) as s:
             assert s.autocommit == True
 
-    def test_commit_after_yield(self):
+    def test_commit_after_yield_when_commit_on_success_is_default(self):
         real_session = mock.Mock()
         self.mock_session.return_value = real_session
         with managed(self.mock_session):
             pass
         assert 1 == real_session.commit.call_count
+
+
+    def test_dont_commit_after_yield_when_commit_on_success_is_false(self):
+        real_session = mock.Mock()
+        self.mock_session.return_value = real_session
+        with managed(self.mock_session, commit_on_success=False):
+            pass
+        assert 0 == real_session.commit.call_count
+
 
     def test_close_after_yield(self):
         real_session = mock.Mock()
