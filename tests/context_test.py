@@ -147,6 +147,8 @@ class ManagedAsDecorator(unittest.TestCase):
         def f(s):
             self.assertFalse(s.autoflush)
 
+        f()
+
     def test_set_autoflush_value(self):
         class MySession(BaseDumbSession):
             def __init__(self):
@@ -155,6 +157,8 @@ class ManagedAsDecorator(unittest.TestCase):
         @managed(MySession, auto_flush=True)
         def f(s):
             self.assertTrue(s.autoflush)
+
+        f()
 
     def test_set_autocommit_false(self):
         class MySession(BaseDumbSession):
@@ -165,6 +169,8 @@ class ManagedAsDecorator(unittest.TestCase):
         def f(s):
             self.assertFalse(s.autocommit)
 
+        f()
+
     def test_set_autocommit_value(self):
         class MySession(BaseDumbSession):
             def __init__(self):
@@ -173,6 +179,8 @@ class ManagedAsDecorator(unittest.TestCase):
         @managed(MySession, auto_commit=True)
         def f(s):
             self.assertTrue(s.autocommit)
+
+        f()
 
     def test_commit_if_success_when_commit_on_success_is_default(self):
         real_session = mock.Mock()
