@@ -27,23 +27,22 @@ This is the basic context manager and it will commit and close your session auto
             
 If you raise any exception inside the ``with`` block, the session will be rolled back and the exception re-raised.
 
+To avoid having all of the function body inside the ``with`` block, ``managed`` functions as a context manager as well.
+
+      ::
+
+            @managed(MySessionClass)
+            def foo(session, *args, **kwargs):
+                # Do what you need with your session
+                pass
+
+
+            # call as if the session didn't exist:
+            foo(2, a='b')
+
+The session is opened every time the function is called and closed whenever it returns or raises an exception. Autommit and rollback rules work as normal.
+
 Additional options
 ^^^^^^^^^^^^^^^^^^
    
  * ``auto_flush``: Sets the autoflush option on the SQLAlchemy session, defaults fo ``False``
-
-
-commit_on_success
-=================
-
-This contextmanager should be used in an inner ``with`` block, where you already have an open session but need to commit more than one time. The code will be something on these lines.
-
-  ::
-
-    with managed(MySession) as session:
-        for a in iterable:
-            with commit_on_success(session):
-                process(a)
-                session.add(a)
-
-If you raise an exception inside the second ``with`` block, all previous iterations will already be commited and just the current one will be rolledback.
