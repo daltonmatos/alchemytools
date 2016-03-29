@@ -16,6 +16,7 @@ setup(
     url='https://github.com/daltonmatos/alchemytools',
     packages=find_packages(),
     install_requires=['SQLAlchemy >=0.7.8, <=1.0.12'],
+    tests_require=['mock==1.3.0'], 
     classifiers=[
           'Intended Audience :: Developers',
           'License :: OSI Approved :: BSD License',
