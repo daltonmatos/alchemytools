@@ -19,30 +19,36 @@ managed
 
 This is the basic context manager and it will commit and close your session automatically, at the end of the ``with`` block.
 
-      ::
+ .. code-block:: python
 
-            with managed(MySessionClass) as session:
-                # Do what you need with your session
-            # Here the session is already closed and commited
+    with managed(MySessionClass) as session:
+        # Do what you need with your session
+    # Here the session is already closed and commited
             
 If you raise any exception inside the ``with`` block, the session will be rolled back and the exception re-raised.
 
 To avoid having all of the function body inside the ``with`` block, ``managed`` functions as a context manager as well.
 
-      ::
+.. code-block:: python
+    
+    @managed(MySessionClass)
+    def foo(session, *args, **kwargs):
+        # Do what you need with your session
+        pass
 
-            @managed(MySessionClass)
-            def foo(session, *args, **kwargs):
-                # Do what you need with your session
-                pass
-
-
-            # call as if the session didn't exist:
-            foo(2, a='b')
+    # call as if the session didn't exist:
+    foo(2, a='b')
 
 The session is opened every time the function is called and closed whenever it returns or raises an exception. Autommit and rollback rules work as normal.
 
 Additional options
 ^^^^^^^^^^^^^^^^^^
    
- * ``auto_flush``: Sets the autoflush option on the SQLAlchemy session, defaults fo ``False``
+ ``auto_flush``: Sets the autoflush option on the SQLAlchemy session, defaults fo ``False``
+
+Executing tests
+^^^^^^^^^^^^^^^
+
+ .. code-block:: shell
+
+    $ python setup.py test 
