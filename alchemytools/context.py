@@ -1,5 +1,4 @@
-from contextlib import contextmanager
-from callback import Callback
+from alchemytools.callback import Callback
 
 
 class managed(object):
