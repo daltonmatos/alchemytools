@@ -65,14 +65,12 @@ class ManagedAsContextManagerTest(unittest.TestCase):
             pass
         self.assertEqual(real_session.commit.call_count, 1)
 
-
     def test_dont_commit_after_yield_when_commit_on_success_is_false(self):
         real_session = mock.Mock()
         self.mock_session.return_value = real_session
         with managed(self.mock_session, commit_on_success=False):
             pass
         self.assertEqual(real_session.commit.call_count, 0)
-
 
     def test_close_after_yield(self):
         real_session = mock.Mock()
@@ -105,10 +103,11 @@ class ManagedAsContextManagerTest(unittest.TestCase):
     def test_callback_is_called(self):
         func = mock.Mock()
         callback = Callback(func, 42, foo="bar")
-        with managed(mock.Mock(), callback=callback):
-            pass
-
-        func.assert_called_once(42, foo="bar")
+        try:
+            with managed(mock.Mock(), callback=callback):
+                raise Exception
+        except:
+            func.assert_called_once_with(42, foo="bar")
 
     def test_session_is_closed_on_return(self):
         real_session = mock.Mock()
