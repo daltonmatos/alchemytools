@@ -15,7 +15,7 @@ setup(
     author_email='daltonmatos@gmail.com',
     url='https://github.com/daltonmatos/alchemytools',
     packages=find_packages(),
-    install_requires=['SQLAlchemy >=0.7.8, <=1.2.15'],
+    install_requires=['SQLAlchemy >=0.7.8, <=1.3.6'],
     tests_require=['tox==3.5.3', 'mock==2.0.0'],
     classifiers=[
           'Intended Audience :: Developers',
